@@ -1,7 +1,14 @@
 <template>
   <div class="el-data-tree">
     <slot name="title" v-if="hasTitle">
-      <p class="data-tree-title">{{ title }}<i class="el-icon-plus" @click="onDefaultNew"></i></p>
+      <p class="data-tree-title">
+        {{ title }}
+        <span @click="onDefaultNew">
+          <slot name="add">
+            <i class="el-icon-plus"></i>
+          </slot>
+        </span>
+      </p>
     </slot>
 
     <el-input
