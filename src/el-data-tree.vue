@@ -4,7 +4,7 @@
       <p class="data-tree-title">
         {{ title }}
         <span @click="onDefaultNew">
-          <slot name="add">
+          <slot name="new">
             <i class="el-icon-plus"></i>
           </slot>
         </span>
