@@ -3,9 +3,9 @@
  ```vue
 <template>
   <el-data-tree :url="getUrl" data-path="data.payload">
-    <span slot="node-text" slot-scope="{ row }">
-      <el-tag size="mini">{{ row.id }}</el-tag>
-      {{ row.name }}
+    <span slot="node-label" slot-scope="{ data }">
+      <el-tag size="mini">{{ data.id }}</el-tag>
+      {{ data.name }}
     </span>
   </el-data-tree>
 </template>

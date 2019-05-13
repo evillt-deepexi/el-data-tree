@@ -30,7 +30,8 @@
         slot-scope="{node, data}"
       >
         <span class="custom-tree-node-label">
-          <slot name="node-text" :row="data">
+          <!-- @slot 可定制的节点标签内容, 参数为 { data } -->
+          <slot name="node-label" :data="data">
             {{ node.label }}
           </slot>
         </span>
