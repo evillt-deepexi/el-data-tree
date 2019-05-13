@@ -9,7 +9,7 @@ const docs = [
   'multi-select-nodes',
   'memorize-expansion',
   'custom-menu',
-  'custom-node-text'
+  'slot-node-text'
 ]
 
 const demoSections = docs.map(name => ({
