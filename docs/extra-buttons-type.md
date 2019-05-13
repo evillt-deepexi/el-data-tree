@@ -1,4 +1,4 @@
-自定义节点菜单(text)
+自定义节点菜单(dropdown)
 
   ```vue
 <template>
@@ -6,7 +6,7 @@
     :url="getUrl"
     data-path="data.payload"
     :extraButtons="extraButtons"
-    extraButtonsType="text"
+    extraButtonsType="dropdown"
     :hasDelete="false"
     :hasNew="false"
   ></el-data-tree>
