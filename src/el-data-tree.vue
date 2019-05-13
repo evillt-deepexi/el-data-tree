@@ -630,7 +630,7 @@ export default {
 </script>
 
 <style lang="stylus">
-$deleteColor=#E24156;
+$delete-color=#E24156;
 
   .el-data-tree {
     .data-tree-title {
@@ -661,9 +661,9 @@ $deleteColor=#E24156;
       text-overflow: ellipsis
     }
     .delete-button {
-      color: $deleteColor;
+      color: $delete-color;
       &:hover, &:focus {
-        color: $deleteColor;
+        color: $delete-color;
       }
     }
   }
