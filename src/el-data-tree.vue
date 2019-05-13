@@ -624,6 +624,8 @@ export default {
 </script>
 
 <style lang="stylus">
+$deleteColor=#E24156;
+
   .el-data-tree {
     .data-tree-title {
       padding: 8px;
@@ -653,9 +655,9 @@ export default {
       text-overflow: ellipsis
     }
     .delete-button {
-      color: #E24156;
+      color: $deleteColor;
       &:hover, &:focus {
-        color: #E24156;
+        color: $deleteColor;
       }
     }
   }
