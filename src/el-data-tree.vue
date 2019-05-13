@@ -46,7 +46,7 @@
             >
               {{ btn.text }}
             </el-button>
-            <el-button v-if="hasDelete" type="text" @click="handleCommand('delete', node, data)">
+            <el-button v-if="hasDelete" type="text" @click="handleCommand('delete', node, data)" class="delete-button">
               {{ deleteText }}
             </el-button>
           </template>
@@ -651,6 +651,12 @@ export default {
     .custom-tree-node-label {
       overflow: hidden;
       text-overflow: ellipsis
+    }
+    .delete-button {
+      color: #E24156;
+      &:hover, &:focus {
+        color: #E24156;
+      }
     }
   }
 </style>
