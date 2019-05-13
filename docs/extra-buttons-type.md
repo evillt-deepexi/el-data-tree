@@ -3,12 +3,11 @@
   ```vue
 <template>
   <el-data-tree
+    :form="form"
     :url="getUrl"
     data-path="data.payload"
     :extraButtons="extraButtons"
     extraButtonsType="text"
-    :hasDelete="false"
-    :hasNew="false"
   ></el-data-tree>
 </template>
 
@@ -16,17 +15,21 @@
 export default {
   data() {
     return {
+      form: [
+        {
+          $id: 'name',
+          $type: 'input',
+          label: '名字',
+          $el: {
+            placeholder: '请输入'
+          }
+        }
+      ],
       extraButtons: [
         {
-          text: '#msbuild',
+          text: '自定义按钮',
           atClick: (node, data) => {
-            console.log('微软开发者大会', data)
-          }
-        },
-        {
-          text: '#io2019',
-          atClick: () => {
-            console.log('Google I/O 2019')
+            console.log(data)
           }
         }
       ]
