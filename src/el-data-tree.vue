@@ -180,7 +180,7 @@ export default {
      */
     extraButtonsType: {
       type: String,
-      default: 'text'
+      default: 'dropdown'
     },
     /**
      * 弹窗表单, 用于新增与修改, 详情配置参考 @femessage/el-form-renderer
