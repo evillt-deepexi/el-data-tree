@@ -28,7 +28,11 @@
         class="custom-tree-node"
         slot-scope="{node, data}"
       >
-        <span class="custom-tree-node-label">{{ node.label }}</span>
+        <span class="custom-tree-node-label">
+          <slot name="node-text" :row="data">
+            {{ node.label }}
+          </slot>
+        </span>
         <span @click="e => e.stopPropagation()" v-if="hasOperation">
           <el-dropdown
             trigger="click"
