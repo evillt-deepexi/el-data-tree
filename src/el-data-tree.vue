@@ -176,11 +176,11 @@ export default {
     },
     /**
      * 操作列自定义菜单样式, 默认是dropdown
-     * `dropdown, text`
+     * `text, dropdown`
      */
     extraButtonsType: {
       type: String,
-      default: 'dropdown'
+      default: 'text'
     },
     /**
      * 弹窗表单, 用于新增与修改, 详情配置参考 @femessage/el-form-renderer
