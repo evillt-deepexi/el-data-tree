@@ -35,6 +35,7 @@
     "build:es": "rollup --config build/rollup.config.js --format es --file dist/el-data-tree.esm.js",
     "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/el-data-tree.min.js",
     "stdver": "standard-version -m '[skip ci] chore(release): v%s'",
+    "lint": "eslint \"**/*.@(js|vue)\" --fix",
     "release": "gren release --override"
   },
   "dependencies": {
