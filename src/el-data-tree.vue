@@ -686,8 +686,8 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-$delete-color = #E24156;
+<style lang="less">
+@delete-color: #E24156;
 
 .el-data-tree {
   overflow: hidden;
@@ -775,10 +775,10 @@ $delete-color = #E24156;
   }
 
   .delete-button {
-    color: $delete-color;
+    color: @delete-color;
 
     &:hover, &:focus {
-      color: $delete-color;
+      color: @delete-color;
     }
   }
 }
