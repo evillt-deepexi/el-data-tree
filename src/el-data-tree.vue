@@ -2,14 +2,18 @@
   <div
     class="el-data-tree"
     :class="{'has-border': hasBorder, 'is-collapsed': isCollapsed}"
+    @click="isCollapsed = false"
   >
     <div v-if="collapsable" class="collapse-icon-wrapper">
-      <span class="collapse-icon" @click="isCollapsed = !isCollapsed">
+      <span
+        class="collapse-icon"
+        @click.prevent.stop="isCollapsed = !isCollapsed"
+      >
         <chevron-left-icon />
       </span>
     </div>
 
-    <div class="el-data-tree-main" @click.stop="isCollapsed = false">
+    <div class="el-data-tree-main">
       <header v-if="hasTitle || hasHeader" class="header">
         <div class="header-left">
           <!--@slot 自定义标题 -->

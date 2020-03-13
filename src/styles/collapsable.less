@@ -13,15 +13,14 @@
   &.is-collapsed {
     min-width: 20px;
     width: 20px;
+    background-color: #ebeef5;
+    cursor: pointer;
 
     & .collapse-icon {
       transform: rotate(180deg);
     }
 
     & .el-data-tree-main {
-      background-color: #ebeef5;
-      cursor: pointer;
-
       // 折叠后隐藏所有树节点内容
       & .body {
         opacity: 0;
