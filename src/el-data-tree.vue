@@ -1,123 +1,134 @@
 <template>
-  <div class="el-data-tree" :class="{'has-border': hasBorder}">
-    <header v-if="hasTitle || hasHeader" class="header">
-      <div class="header-left">
-        <!--@slot 自定义标题 -->
-        <slot name="title">
-          <p class="header-title">{{ title }}</p>
-        </slot>
-      </div>
-      <div class="header-right">
-        <span class="header-new-btn" @click="onDefaultNew">
-          <!--@slot 头部新增按钮 -->
-          <slot name="header-new-btn">
-            <el-button type="text" size="mini">
-              <i class="el-icon-plus"></i>
-            </el-button>
-          </slot>
-        </span>
-        <span class="header-extra-block">
-          <!--@slot 标题栏右边的额外区域-->
-          <slot name="header-extra-block"></slot>
-        </span>
-      </div>
-    </header>
+  <div
+    class="el-data-tree"
+    :class="{'has-border': hasBorder, 'is-collapsed': isCollapsed}"
+  >
+    <div v-if="collapsable" class="collapse-icon-wrapper">
+      <span class="collapse-icon" @click="isCollapsed = !isCollapsed">
+        <chevron-left-icon />
+      </span>
+    </div>
 
-    <section class="body">
-      <el-input
-        v-if="showFilter"
-        v-model="filterText"
-        placeholder="查询"
-        suffix-icon="el-icon-search"
-        clearable
-      ></el-input>
-      <el-tree
-        ref="tree"
-        v-loading="loading"
-        :data="treeData"
-        v-bind="treeAttributes"
-        :filter-node-method="filterNode"
-        :default-expanded-keys="defaultExpandedKeys"
-        class="data-tree"
-        v-on="$listeners"
-        @node-expand="handleNodeExpand"
-        @node-collapse="handleNodeCollapse"
-        @check-change="handleCheckChange"
-      >
-        <span slot-scope="{node, data}" class="custom-tree-node">
-          <span class="custom-tree-node-label">
-            <!-- @slot 可定制的节点标签内容, 参数为 { data } -->
-            <slot name="node-label" :data="data">{{ node.label }}</slot>
+    <div class="el-data-tree-main" @click.stop="isCollapsed = false">
+      <header v-if="hasTitle || hasHeader" class="header">
+        <div class="header-left">
+          <!--@slot 自定义标题 -->
+          <slot name="title">
+            <p class="header-title">{{ title }}</p>
+          </slot>
+        </div>
+        <div class="header-right">
+          <span class="header-new-btn" @click="onDefaultNew">
+            <!--@slot 头部新增按钮 -->
+            <slot name="header-new-btn">
+              <el-button type="text" size="mini">
+                <i class="el-icon-plus"></i>
+              </el-button>
+            </slot>
           </span>
-          <span
-            v-if="hasOperation"
-            class="custom-tree-node-btns"
-            @click="e => e.stopPropagation()"
-          >
-            <template v-if="extraButtonsType === 'text'">
-              <el-button
-                v-if="hasNew"
-                type="text"
-                @click="handleCommand('new', node, data)"
-                >{{ newText }}</el-button
-              >
-              <el-button
-                v-if="hasEdit"
-                type="text"
-                @click="handleCommand('edit', node, data)"
-                >{{ editText }}</el-button
-              >
-              <el-button
-                v-for="(btn, i) in extraButtons.filter(
-                  btn => !btn.show || btn.show(data, node)
-                )"
-                :key="i"
-                v-bind="btn"
-                type="text"
-                @click="handleCommand(btn.text, node, data)"
-                >{{ btn.text }}</el-button
-              >
-              <el-button
-                v-if="hasDelete"
-                type="text"
-                class="delete-button"
-                @click="handleCommand('delete', node, data)"
-                >{{ deleteText }}</el-button
-              >
-            </template>
-            <el-dropdown
-              v-else
-              trigger="click"
-              @command="command => handleCommand(command, data, node)"
+          <span class="header-extra-block">
+            <!--@slot 标题栏右边的额外区域-->
+            <slot name="header-extra-block"></slot>
+          </span>
+        </div>
+      </header>
+
+      <section class="body">
+        <el-input
+          v-if="showFilter"
+          v-model="filterText"
+          placeholder="查询"
+          suffix-icon="el-icon-search"
+          clearable
+        ></el-input>
+        <el-tree
+          ref="tree"
+          v-loading="loading"
+          :data="treeData"
+          v-bind="treeAttributes"
+          :filter-node-method="filterNode"
+          :default-expanded-keys="defaultExpandedKeys"
+          class="data-tree"
+          v-on="$listeners"
+          @node-expand="handleNodeExpand"
+          @node-collapse="handleNodeCollapse"
+          @check-change="handleCheckChange"
+        >
+          <span slot-scope="{node, data}" class="custom-tree-node">
+            <span class="custom-tree-node-label">
+              <!-- @slot 可定制的节点标签内容, 参数为 { data } -->
+              <slot name="node-label" :data="data">{{ node.label }}</slot>
+            </span>
+            <span
+              v-if="hasOperation"
+              class="custom-tree-node-btns"
+              @click="e => e.stopPropagation()"
             >
-              <span class="el-dropdown-link">
-                <i class="el-icon-more"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-if="hasNew" command="new">{{
-                  newText
-                }}</el-dropdown-item>
-                <el-dropdown-item v-if="hasEdit" command="edit">{{
-                  editText
-                }}</el-dropdown-item>
-                <el-dropdown-item
+              <template v-if="extraButtonsType === 'text'">
+                <el-button
+                  v-if="hasNew"
+                  type="text"
+                  @click="handleCommand('new', node, data)"
+                  >{{ newText }}</el-button
+                >
+                <el-button
+                  v-if="hasEdit"
+                  type="text"
+                  @click="handleCommand('edit', node, data)"
+                  >{{ editText }}</el-button
+                >
+                <el-button
                   v-for="(btn, i) in extraButtons.filter(
                     btn => !btn.show || btn.show(data, node)
                   )"
                   :key="i"
                   v-bind="btn"
-                  :command="btn.text"
-                  >{{ btn.text }}</el-dropdown-item
+                  type="text"
+                  @click="handleCommand(btn.text, node, data)"
+                  >{{ btn.text }}</el-button
                 >
-                <el-dropdown-item v-if="hasDelete" command="delete">{{
-                  deleteText
-                }}</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+                <el-button
+                  v-if="hasDelete"
+                  type="text"
+                  class="delete-button"
+                  @click="handleCommand('delete', node, data)"
+                  >{{ deleteText }}</el-button
+                >
+              </template>
+              <el-dropdown
+                v-else
+                trigger="click"
+                @command="command => handleCommand(command, data, node)"
+              >
+                <span class="el-dropdown-link">
+                  <i class="el-icon-more"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item v-if="hasNew" command="new">{{
+                    newText
+                  }}</el-dropdown-item>
+                  <el-dropdown-item v-if="hasEdit" command="edit">{{
+                    editText
+                  }}</el-dropdown-item>
+                  <el-dropdown-item
+                    v-for="(btn, i) in extraButtons.filter(
+                      btn => !btn.show || btn.show(data, node)
+                    )"
+                    :key="i"
+                    v-bind="btn"
+                    :command="btn.text"
+                    >{{ btn.text }}</el-dropdown-item
+                  >
+                  <el-dropdown-item v-if="hasDelete" command="delete">{{
+                    deleteText
+                  }}</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </span>
           </span>
-        </span>
-      </el-tree>
-    </section>
+        </el-tree>
+      </section>
+    </div>
 
     <el-dialog
       :title="dialogTitle"
@@ -146,6 +157,7 @@
 
 <script>
 import _get from 'lodash.get'
+import ChevronLeftIcon from './icons/chevron-left.vue'
 
 const dataPath = 'payload.content'
 const dialogForm = 'dialogForm'
@@ -166,6 +178,9 @@ const camelize = str =>
 
 export default {
   name: 'ElDataTree',
+  components: {
+    ChevronLeftIcon
+  },
   props: {
     /**
      * 标题文字
@@ -384,6 +399,13 @@ export default {
     deleteText: {
       type: String,
       default: '删除'
+    },
+    /**
+     * 是否可以折叠树
+     */
+    collapsable: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -404,7 +426,10 @@ export default {
       defaultExpandedKeys: [],
 
       // 展开操作后的节点 keys，用于保存新增、编辑、删除等操作后的展开状态
-      cacheExpandedKeys: new Set()
+      cacheExpandedKeys: new Set(),
+
+      // 树折叠状态
+      isCollapsed: false
     }
   },
   computed: {
@@ -721,8 +746,11 @@ export default {
 @delete-color: #e24156;
 
 .el-data-tree {
-  overflow: hidden;
   transition: 0.3s;
+
+  & .el-data-tree-main {
+    overflow: hidden;
+  }
 
   &.has-border {
     border-radius: 4px;
@@ -818,3 +846,5 @@ export default {
   }
 }
 </style>
+
+<style lang="less" src="./styles/collapsable.less"></style>
